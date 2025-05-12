@@ -23,12 +23,19 @@ jobs:
           pr_number: ${{ github.event.pull_request.number }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
+
   deploy:
     needs: deploy-if-merged
     if: needs.deploy-if-merged.outputs.environments != '["none"]'
     strategy:
       matrix:
         environment: ${{ fromJson(needs.deploy-if-merged.outputs.environments) }}
-    uses: felixsuarez0727/github-actions-demo-centralized-repository/.github/workflows/deploy-environment.yml@main
-    with:
-      environment: ${{ matrix.environment }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Trigger reusable workflow from external repository
+        uses: felixsuarez0727/github-actions-demo-centralized-repository/.github/workflows/deploy-environment.yml@main
+        with:
+          environment: ${{ matrix.environment }}
