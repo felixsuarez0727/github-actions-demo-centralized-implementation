@@ -29,6 +29,9 @@ jobs:
     strategy:
       matrix:
         environment: ${{ fromJson(needs.deploy-if-merged.outputs.environments) }}
-    uses: felixsuarez0727/github-actions-demo-centralized-repository/.github/workflows/common/deploy-environment.yml@main
-    with:
-      environment: ${{ matrix.environment }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger external deployment workflow
+        uses: felixsuarez0727/github-actions-demo-centralized-repository/.github/workflows/common/deploy-environment.yml@main
+        with:
+          environment: ${{ matrix.environment }}
