@@ -30,6 +30,6 @@ jobs:
       matrix:
         environment: ${{ fromJson(needs.deploy-if-merged.outputs.environments) }}
     runs-on: ubuntu-latest
-    uses: felixsuarez0727/github-actions-demo-centralized-repository/.github/workflows/common/deploy-environment.yml@main
+    uses: felixsuarez0727/github-actions-demo-centralized-repository/.github/workflows/deploy-environment.yml@main
     with:
       environment: ${{ matrix.environment }}
