@@ -30,12 +30,6 @@ jobs:
     strategy:
       matrix:
         environment: ${{ fromJson(needs.deploy-if-merged.outputs.environments) }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Trigger reusable workflow from external repository
-        uses: felixsuarez0727/github-actions-demo-centralized-repository/.github/workflows/deploy-environment.yml@main
-        with:
-          environment: ${{ matrix.environment }}
+    uses: felixsuarez0727/github-actions-demo-centralized-repository/.github/workflows/deploy-environment.yml@main
+    with:
+      environment: ${{ matrix.environment }}
